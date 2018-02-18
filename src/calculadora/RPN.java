@@ -57,6 +57,7 @@ public class RPN {
 		
 	}
 	
+	
 	public void operaciones() {
 		for(int i = 0; i < commando.length( ); i++) {
 			// si es un digito
