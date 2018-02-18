@@ -49,25 +49,23 @@ public class RPN {
 		pushPila(a%b);
 	}
 	
-	public void obtenerNumero(int i) {
-		int j;
-		// obtener un string a partir del numero
-		String temp = "";
-		for(j = 0; (j < 100) && (Character.isDigit(commando.charAt(i)) || (commando.charAt(i) == '.')); j++, i++) {
-			temp = temp + String.valueOf(commando.charAt(i));
-		}
+	public void obtenerNumero(String temp) {
+		
 		// convertir a double y añadir a la pila
 		numero = Double.parseDouble(temp);
 		pushPila(numero);
 		
 	}
 	
-	public double resultado( ) {
-
+	public void operaciones() {
 		for(int i = 0; i < commando.length( ); i++) {
 			// si es un digito
 			if(Character.isDigit(commando.charAt(i))) {
-				this.obtenerNumero(i);
+				String temp = "";
+				for(int j = 0; (j < 100) && (Character.isDigit(commando.charAt(i)) || (commando.charAt(i) == '.')); j++, i++) {
+					temp = temp + String.valueOf(commando.charAt(i));
+					this.obtenerNumero(temp);
+				}
 			} else if(commando.charAt(i) == '+') {
 				this.suma();
 			} else if(commando.charAt(i) == '-') {
@@ -84,12 +82,18 @@ public class RPN {
 				throw new IllegalArgumentException( );
 			}
 		}
+	}
+	
+	public double resultado( ) {
+
+		this.operaciones();
 		double val = popPila( );
 		if(arriba != null) {
 			throw new IllegalArgumentException( );
 		}
 		return val;
 	}
+
 	private String commando;
 	private NodoPila arriba;
 	private double a, b, numero;
