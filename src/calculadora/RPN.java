@@ -15,13 +15,46 @@ public class RPN {
 		arriba = null;
 		this.commando = commando;
 	}
+	
+	public void suma() {
+		b = popPila( );
+		a = popPila( );
+		pushPila(a + b);
+	}
+	public void resta() {
+		b = popPila( );
+		a = popPila( );
+		pushPila(a - b);
+	}
+	public void multiplicacion(){
+		b = popPila( );
+		a = popPila( );
+		pushPila(a * b);
+	}
+	public void division() {
+		b = popPila( );
+		a = popPila( );
+		pushPila(a / b);
+	}
+	public void exponencial() {
+		b = popPila( );
+		a = popPila( );
+		pushPila(Math.pow(a, b));
+	}
+	
+	public void resto() {
+		b = popPila( );
+		a = popPila( );
+		pushPila(a%b);
+	}
+	
 	public double resultado( ) {
-		double a, b;
+
 		int j;
 		for(int i = 0; i < commando.length( ); i++) {
 			// si es un digito
 			if(Character.isDigit(commando.charAt(i))) {
-				double numero;
+
 				// obtener un string a partir del numero
 				String temp = "";
 				for(j = 0; (j < 100) && (Character.isDigit(commando.charAt(i)) || (commando.charAt(i) == '.')); j++, i++) {
@@ -31,31 +64,18 @@ public class RPN {
 				numero = Double.parseDouble(temp);
 				pushPila(numero);
 			} else if(commando.charAt(i) == '+') {
-				b = popPila( );
-				a = popPila( );
-				pushPila(a + b);
+				this.suma();
 			} else if(commando.charAt(i) == '-') {
-				b = popPila( );
-				a = popPila( );
-				pushPila(a - b);
+				this.resta();
 			} else if(commando.charAt(i) == '*') {
-				b = popPila( );
-				a = popPila( );
-				pushPila(a * b);
+				this.multiplicacion();
 			} else if(commando.charAt(i) == '/') {
-				b = popPila( );
-				a = popPila( );
-				pushPila(a / b);
-			}
-			else if(commando.charAt(i) == '^') {
-				b = popPila( );
-				a = popPila( );
-				pushPila(Math.pow(a, b));}
-			else if(commando.charAt(i) == '%') {
-				b = popPila( );
-				a = popPila( );
-				pushPila(a%b);
-			} else if(commando.charAt(i) != ' ') {
+				this.division();
+			}else if(commando.charAt(i) == '^') {
+				this.exponencial();
+			}else if(commando.charAt(i) == '%') {
+				this.resto();
+			}else if(commando.charAt(i) != ' ') {
 				throw new IllegalArgumentException( );
 			}
 		}
@@ -67,4 +87,5 @@ public class RPN {
 	}
 	private String commando;
 	private NodoPila arriba;
+	private double a, b, numero;
 }
