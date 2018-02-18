@@ -2,6 +2,7 @@ package calculadora;
 
 
 public class RPN {
+	
 	public void pushPila(double nuevo_dato) {
 		NodoPila nuevo_nodo = new NodoPila(nuevo_dato, arriba);
 		arriba = nuevo_nodo;
@@ -48,21 +49,25 @@ public class RPN {
 		pushPila(a%b);
 	}
 	
+	public void obtenerNumero(int i) {
+		int j;
+		// obtener un string a partir del numero
+		String temp = "";
+		for(j = 0; (j < 100) && (Character.isDigit(commando.charAt(i)) || (commando.charAt(i) == '.')); j++, i++) {
+			temp = temp + String.valueOf(commando.charAt(i));
+		}
+		// convertir a double y añadir a la pila
+		numero = Double.parseDouble(temp);
+		pushPila(numero);
+		
+	}
+	
 	public double resultado( ) {
 
-		int j;
 		for(int i = 0; i < commando.length( ); i++) {
 			// si es un digito
 			if(Character.isDigit(commando.charAt(i))) {
-
-				// obtener un string a partir del numero
-				String temp = "";
-				for(j = 0; (j < 100) && (Character.isDigit(commando.charAt(i)) || (commando.charAt(i) == '.')); j++, i++) {
-					temp = temp + String.valueOf(commando.charAt(i));
-				}
-				// convertir a double y añadir a la pila
-				numero = Double.parseDouble(temp);
-				pushPila(numero);
+				this.obtenerNumero(i);
 			} else if(commando.charAt(i) == '+') {
 				this.suma();
 			} else if(commando.charAt(i) == '-') {
